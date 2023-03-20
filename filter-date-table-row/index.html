@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<label for="filter">Filter:</label>
+<input type="text" id="filter">
+
+<div id="items">
+  <div class="item">Item 1</div>
+  <div class="item">Item 2</div>
+  <div class="item">Item 3</div>
+  <div class="item">Item 4</div>
+  <div class="item">Item 5</div>
+</div>
+
+<script>
+  // Fungsi untuk memfilter elemen di dalam div
+  // function filterByValue() {
+  //   var value = document.getElementById('filter').value.toLowerCase();
+  //   var items = document.getElementsByClassName('item');
+
+  //   Array.prototype.forEach.call(items, function(item) {
+  //     if (item.innerText.toLowerCase().indexOf(value) > -1) {
+  //       item.style.display = 'block';
+  //     } else {
+  //       item.style.display = 'none';
+  //     }
+  //   });
+  // }
+
+  // // Event listener untuk input filter
+  // document.getElementById('filter').addEventListener('keyup', filterByValue);
+
+	function filterByValue(pageSize, pageNumber) {
+  var value = document.getElementById('filter').value.toLowerCase();
+  var items = document.getElementsByClassName('item');
+  var startIndex = pageSize * (pageNumber - 1);
+  var endIndex = startIndex + pageSize;
+
+  Array.prototype.forEach.call(items, function(item, index) {
+    if (item.innerText.toLowerCase().indexOf(value) > -1) {
+      if (index >= startIndex && index < endIndex) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// Event listener untuk input filter dan pagination
+var filterInput = document.getElementById('filter');
+var pageSize = 2;
+var currentPage = 1;
+
+filterInput.addEventListener('keyup', function() {
+  filterByValue(pageSize, currentPage);
+});
+
+var prevButton = document.createElement('button');
+prevButton.innerHTML = 'Prev';
+prevButton.setAttribute('id', 'prev');
+
+var nextButton = document.createElement('button');
+nextButton.innerHTML = 'Next';
+nextButton.setAttribute('id', 'next');
+
+var paginationContainer = document.createElement('div');
+paginationContainer.setAttribute('class', 'pagination');
+
+paginationContainer.appendChild(prevButton);
+paginationContainer.appendChild(nextButton);
+
+document.body.appendChild(paginationContainer);
+
+prevButton.addEventListener('click', function() {
+  if (currentPage > 1) {
+    currentPage--;
+    filterByValue(pageSize, currentPage);
+  }
+});
+
+nextButton.addEventListener('click', function() {
+  var items = document.getElementsByClassName('item');
+  var numPages = Math.ceil(items.length / pageSize);
+
+  if (currentPage < numPages) {
+    currentPage++;
+    filterByValue(pageSize, currentPage);
+  }
+});
+
+</script>
+
+</body>
+</html>

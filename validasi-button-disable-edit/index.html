@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contoh</title>
+</head>
+<body>
+  <form>
+    <label for="nama_kategori">Nama Kategori:</label>
+    <input type="text" id="nama_kategori" value="1234"><br><br>
+    <label for="nie">NIE:</label>
+    <input type="text" id="nie" value="1234"><br><br>
+    <button id="simpan" disabled>Simpan</button>
+  </form>
+
+  <script>
+    const namakat = document.getElementById('nama_kategori');
+    const nie = document.getElementById('nie');
+    const simpanButton = document.getElementById('simpan');
+
+    // Simpan nilai awal input saat halaman dimuat
+    const namaAwal = namakat.value;
+    const nieAwal = nie.value;
+
+    // Cek perubahan pada input setiap kali pengguna mengetik
+    namakat.addEventListener('input', cekPerubahan);
+    nie.addEventListener('input', cekPerubahan);
+
+    // Validasi saat kehilangan fokus pada input
+    namakat.addEventListener('blur', validasiBlur);
+    nie.addEventListener('blur', validasiBlur);
+
+    function cekPerubahan() {
+      // Cek apakah nilai input berubah
+      if (namakat.value !== namaAwal || nie.value !== nieAwal) {
+        simpanButton.disabled = false; // Aktifkan tombol jika ada perubahan
+      } else {
+        simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan
+      }
+    }
+
+    function validasiBlur() {
+      // Cek apakah nilai input sama dengan nilai awal
+      if (namakat.value === namaAwal && nie.value === nieAwal) {
+        simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan
+      }
+    }
+
+    function validasiInput() {
+      // Cek apakah nilai input sama dengan nilai awal atau jika semua isian kosong
+      if ((namakat.value === namaAwal && nie.value === nieAwal) || (namakat.value === '' && nie.value === '')) {
+        simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan atau semua isian kosong
+      } else {
+        simpanButton.disabled = false; // Aktifkan tombol jika ada perubahan
+      }
+    }
+
+    // Panggil fungsi validasiInput() setelah halaman dimuat
+    validasiInput();
+
+    // Tambahkan event listener pada input field
+    namakat.addEventListener('input', validasiInput);
+    nie.addEventListener('input', validasiInput);
+  </script>
+</body>
+</html>

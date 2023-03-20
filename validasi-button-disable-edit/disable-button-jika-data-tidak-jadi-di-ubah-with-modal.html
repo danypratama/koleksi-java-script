@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contoh</title>
+  <!-- Tambahkan link ke stylesheet Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-...." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- Tambahkan tombol untuk memicu modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Buka Modal
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Form Input</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Tambahkan form input ke dalam modal-body -->
+          <form>
+            <div class="mb-3">
+              <label for="nama_kategori" class="form-label">Nama Kategori:</label>
+              <input type="text" class="form-control" id="nama_kategori" value="1234">
+            </div>
+            <div class="mb-3">
+              <label for="nie" class="form-label">NIE:</label>
+              <input type="text" class="form-control" id="nie" value="1234">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!-- Tambahkan tombol untuk menyimpan dan menutup modal -->
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button id="simpan" type="button" class="btn btn-primary" disabled>Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Tambahkan link ke script Bootstrap dan script validasi input -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-...." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const namakat = document.getElementById('nama_kategori');
+    const nie = document.getElementById('nie');
+    const simpanButton = document.getElementById('simpan');
+
+    // Simpan nilai awal input saat halaman dimuat
+    const namaAwal = namakat.value;
+    const nieAwal = nie.value;
+
+    // Cek perubahan pada input setiap kali pengguna mengetik
+    namakat.addEventListener('input', cekPerubahan);
+    nie.addEventListener('input', cekPerubahan);
+
+    // Validasi saat kehilangan fokus pada input
+    namakat.addEventListener('blur', validasiBlur);
+    nie.addEventListener('blur', validasiBlur);
+
+    function cekPerubahan() {
+      // Cek apakah nilai input berubah
+      if (namakat.value !== namaAwal || nie.value !== nieAwal) {
+        simpanButton.disabled = false; // Aktifkan tombol jika ada perubahan
+      } else {
+        simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan
+		}
+	}
+
+	function validasiBlur() {
+	  // Cek apakah nilai input sama dengan nilai awal
+	  if (namakat.value === namaAwal && nie.value === nieAwal) {
+	    simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan
+	  }
+	}
+
+	function validasiInput() {
+	  // Cek apakah nilai input sama dengan nilai awal atau jika semua isian kosong
+	  if ((namakat.value === namaAwal && nie.value === nieAwal) || (namakat.value === '' && nie.value === '')) {
+	    simpanButton.disabled = true; // Nonaktifkan tombol jika tidak ada perubahan atau semua isian kosong
+	  } else {
+	    simpanButton.disabled = false; // Aktifkan tombol jika ada perubahan
+	  }
+	}
+
+	// Panggil fungsi validasiInput() setelah halaman dimuat
+	validasiInput();
+
+	// Tambahkan event listener pada input field
+	namakat.addEventListener('input', validasiInput);
+	nie.addEventListener('input', validasiInput);
+</script>
